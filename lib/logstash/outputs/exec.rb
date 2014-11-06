@@ -3,9 +3,8 @@ require "logstash/namespace"
 require "logstash/outputs/base"
 
 # This output will run a command for any matching event.
-#
 # Example:
-# 
+# [source,ruby]
 #     output {
 #       exec {
 #         type => abuse
