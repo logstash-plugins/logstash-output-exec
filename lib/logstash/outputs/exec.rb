@@ -30,7 +30,7 @@ class LogStash::Outputs::Exec < LogStash::Outputs::Base
 
   public
   def receive(event)
-    return unless output?(event)
+    
     @logger.debug("running exec command", :command => event.sprintf(@command))
     system(event.sprintf(@command))
   end # def receive
