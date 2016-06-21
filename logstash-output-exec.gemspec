@@ -1,7 +1,6 @@
 Gem::Specification.new do |s|
-
   s.name            = 'logstash-output-exec'
-  s.version         = '3.0.1'
+  s.version         = '3.0.2'
   s.licenses        = ['Apache License (2.0)']
   s.summary         = "This output will run a command for any matching event."
   s.description     = "This gem is a Logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program"
@@ -23,5 +22,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.0"
 
   s.add_development_dependency 'logstash-devutils'
+  s.add_development_dependency "logstash-codec-plain"
 end
 
