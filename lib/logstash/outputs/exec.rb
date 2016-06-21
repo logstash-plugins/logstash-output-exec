@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "logstash/namespace"
 require "logstash/outputs/base"
+require "open3"
 
 # The exec output will run a command for each event received. Ruby's
 # `system()` function will be used, i.e. the command string will
@@ -34,16 +35,33 @@ class LogStash::Outputs::Exec < LogStash::Outputs::Base
   # dynamic strings.
   config :command, :validate => :string, :required => true
 
+  # display the result of the command to the terminal
+  config :quiet, :validate => :boolean, :default => false
+
   public
   def register
     @logger.debug("exec output registered", :config => @config)
-  end # def register
+  end
 
   public
   def receive(event)
-    
-    @logger.debug("running exec command", :command => event.sprintf(@command))
-    system(event.sprintf(@command))
-  end # def receive
+    cmd = event.sprintf(@command)
+    @logger.debug("running exec command", :command => cmd)
 
+    Open3.popen3(cmd) do |stdin, stdout, stderr|
+      if @logger.debug?
+        @logger.pipe(stdout => :debug, stderr => :debug)
+      else
+        # This is for backward compatibility,
+        # the previous implementation was using `Kernel#system' and the default behavior
+        # of this method is to output the result to the terminal.
+        @logger.terminal(stdout.read.chomp) unless quiet?
+      end
+    end
+  end
+
+  private
+  def quiet?
+    @quiet
+  end
 end
