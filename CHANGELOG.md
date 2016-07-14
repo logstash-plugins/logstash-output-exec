@@ -1,3 +1,6 @@
+## 3.0.3
+  - Relax constraint on logstash-core-plugin-api to >= 1.60 <= 2.99
+
 ## 3.0.2
  - Replace `Kernel.system` with `Open3.open3` and fixes `ThreadDeath` issues
  - Will now log stdout and stderr of the command when running logstash in debug mode, the response is streamed to the log.
