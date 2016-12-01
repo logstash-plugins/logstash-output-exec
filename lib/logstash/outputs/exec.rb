@@ -50,12 +50,12 @@ class LogStash::Outputs::Exec < LogStash::Outputs::Base
 
     Open3.popen3(cmd) do |stdin, stdout, stderr|
       if @logger.debug?
-        @logger.pipe(stdout => :debug, stderr => :debug)
+        @logger.debug("debugging command", :stdout => stdout.read.chomp, :stderr => stderr.read.chomp)
       else
         # This is for backward compatibility,
         # the previous implementation was using `Kernel#system' and the default behavior
         # of this method is to output the result to the terminal.
-        @logger.terminal(stdout.read.chomp) unless quiet?
+        @logger.info(stdout.read.chomp) unless quiet?
       end
     end
   end

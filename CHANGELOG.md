@@ -1,3 +1,6 @@
+## 3.1.0
+  - Log output of the exec'd command using log4j info and debug
+
 ## 3.0.3
   - Relax constraint on logstash-core-plugin-api to >= 1.60 <= 2.99
 
