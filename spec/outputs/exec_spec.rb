@@ -32,7 +32,8 @@ describe LogStash::Outputs::Exec do
     end
 
     it "register the stdout and stderr to the logger" do
-      expect(subject.logger).to receive(:pipe).with(stdout => :debug, stderr => :debug)
+      expect(subject.logger).to receive(:debug).with(/running exec command/, hash_including(:command))
+      expect(subject.logger).to receive(:debug).with(/debugging/, hash_including(:stdout, :stderr))
       subject.receive(event)
     end
   end
@@ -40,7 +41,7 @@ describe LogStash::Outputs::Exec do
   context "When debugging is off" do
     context "when quiet is off" do
       it "write output to the terminal" do
-        expect(subject.logger).to receive(:terminal).with(output)
+        expect(subject.logger).to receive(:info).with(output)
         subject.receive(event)
       end
     end
