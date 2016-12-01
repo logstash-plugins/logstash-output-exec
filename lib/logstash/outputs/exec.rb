@@ -50,7 +50,7 @@ class LogStash::Outputs::Exec < LogStash::Outputs::Base
 
     Open3.popen3(cmd) do |stdin, stdout, stderr|
       if @logger.debug?
-        @logger.debug(stdout => :debug, stderr => :debug)
+        @logger.debug(:stdout => stdout.read.chomp, :stderr => stderr.read.chomp)
       else
         # This is for backward compatibility,
         # the previous implementation was using `Kernel#system' and the default behavior
