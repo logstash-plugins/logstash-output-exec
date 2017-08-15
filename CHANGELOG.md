@@ -1,3 +1,6 @@
+## 3.1.2
+  - Fix some documentation issues
+
 ## 3.1.0
   - Log output of the exec'd command using log4j info and debug
 
